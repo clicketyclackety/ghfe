@@ -46,9 +46,9 @@ namespace rn.ui
       button.Click += (o, a) => vm.Browse();
 
       var dl = new DynamicLayout();
-      dl.BeginVertical();
+      dl.BeginVertical(new Padding(0,0,5,5));
       dl.Add(scroller,true, true);
-      dl.AddAutoSized(button, new Padding(0,0,5,5), xscale: true, yscale: false);
+      dl.Add(button,true, false);
       dl.EndVertical();
 
 

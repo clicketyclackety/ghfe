@@ -12,10 +12,10 @@ using lib.DTO;
 
 namespace lib;
 
-internal class GViewModel : INotifyPropertyChanged
+public class GViewModel : INotifyPropertyChanged
 {
 
-  private GH_Document Doc { get; }
+  public GH_Document Doc { get; }
 
   public RowGroup Sorted { get; set; }
 
@@ -29,7 +29,16 @@ internal class GViewModel : INotifyPropertyChanged
 
   internal void Run()
   {
+    foreach(var obj in Doc.ActiveObjects())
+    {
+      obj.CollectData();
+      obj.ComputeData();
+    }
+
     Doc.NewSolution(true, GH_SolutionMode.CommandLine);
+    Doc.ExpirePreview(true);
+    Doc.ForcePreview(true);
+    Rhino.RhinoDoc.ActiveDoc.Views.Redraw();
   }
 
   internal RowGroup GetSortedRows()

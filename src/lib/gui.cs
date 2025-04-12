@@ -14,13 +14,14 @@ using lib.DTO;
 using Rhino.Geometry;
 using Rhino.UI;
 using Rhino.Input;
+using System.ComponentModel;
 
 namespace lib;
 
 public class Gui : FloatingForm
 {
 
-  private GViewModel? Model => DataContext as GViewModel;
+  public GViewModel? Model => DataContext as GViewModel;
 
   private Gui(GViewModel viewModel)
   {
@@ -302,6 +303,15 @@ public class Gui : FloatingForm
     return etoGroup;
   }
 
-#endregion
+  #endregion
+
+  protected override void OnClosing(CancelEventArgs e)
+  {
+    Model?.Doc?.DestroyPreviewCaches();
+    Model?.Doc?.DestroyPreviewMeshes();
+    Model?.Doc?.Dispose();
+    Rhino.RhinoDoc.ActiveDoc?.Views?.Redraw();
+    base.OnClosing(e);
+  }
 
 }
