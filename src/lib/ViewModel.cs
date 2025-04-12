@@ -29,7 +29,7 @@ internal class GViewModel : INotifyPropertyChanged
 
   internal void Run()
   {
-    Doc.NewSolution(false);
+    Doc.NewSolution(true);
   }
 
   internal RowGroup GetSortedRows()

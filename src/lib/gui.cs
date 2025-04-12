@@ -13,7 +13,7 @@ using Grasshopper.Kernel.Types;
 
 namespace lib;
 
-public class Gui : Dialog
+public class Gui : Form
 {
 
   private GViewModel? Model => DataContext as GViewModel;
@@ -28,11 +28,11 @@ public class Gui : Dialog
     var child = CreateRow(viewModel.Sorted);
 
     var layout = new DynamicLayout();
-    layout.BeginHorizontal();
+    layout.BeginVertical();
     layout.Add(child, true, false);
     layout.AddSpace();
     layout.Add(run, true, false);
-    layout.EndHorizontal();
+    layout.EndVertical();
 
     Content = layout;
   }
@@ -50,14 +50,14 @@ public class Gui : Dialog
   public static Control? CreateRow(RowGroup row)
   {
     DynamicLayout layout = new();
-    layout.BeginHorizontal();
+    layout.BeginVertical();
 
     foreach(var rowItem in row.Children)
     {
       var rowControl = ConvertRowGroup(rowItem);
       layout.Add(rowControl, true, false);
     }
-    layout.EndHorizontal();
+    layout.EndVertical();
     return layout;
   }
 
@@ -102,6 +102,7 @@ public class Gui : Dialog
     {
       Param_Integer integer => GetNumberHandlerFromInteger(integer),
       Param_String str => CreateTextInput(str),
+      GH_NumberSlider slider => CreateSlider(slider),
 
       _ => null
     };
@@ -124,7 +125,6 @@ public class Gui : Dialog
     => component switch
     {
       // GH_Group group => CreateGroup(group),
-      GH_NumberSlider slider => CreateSlider(slider),
       GH_Scribble scribble => CreateTitle(scribble),
 
       _ => null

@@ -54,12 +54,17 @@ namespace rn.viewmodels
 
       var doc = Rhino.RhinoDoc.ActiveDoc;
       var parent = RhinoEtoApp.MainWindowForDocument(doc);
-      gui.ShowSemiModal(doc, parent);
-      this.Enabled = false;
 
       gui.Closed += (s, e) => {
         this.Enabled = true;
       };
+
+      // Application.Instance.InvokeAsync(() => {
+      //   gui.ShowSemiModal(doc, parent);
+      //   this.Enabled = false;
+      // });
+
+      gui.Show();
 
       return true;
     }
