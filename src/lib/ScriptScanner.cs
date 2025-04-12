@@ -35,5 +35,24 @@ namespace lib
             }
             return true;
         }
+
+        public static bool TryGetGroup(GH_Document document, string name, out GH_Group group)
+        {
+            var activeObjects = new List<GH_ActiveObject>();
+            var allObjects = document.Objects;
+            group = null;
+            foreach (var obj in allObjects) {
+                if (obj is GH_Group) {
+                    if (obj.NickName == name) {
+                        group = obj as GH_Group;
+                        return true;
+                    }
+                }
+                else {
+                    //return false;
+                }
+            }
+            return true;
+        }
     }
 }
