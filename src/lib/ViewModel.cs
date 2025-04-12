@@ -44,7 +44,7 @@ public class GViewModel : INotifyPropertyChanged
   internal RowGroup GetSortedRows()
   {
     ScriptScanner.TryGetUIRowGroup(Doc, out RowGroup group);
-    return group ?? new RowGroup();
+    return group ?? new RowGroup("Err");
   }
 
 }
