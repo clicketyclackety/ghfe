@@ -1,23 +1,27 @@
 ﻿using Eto.Forms;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Rhino.UI;
 using System.Windows.Input;
 using lib;
 using System.IO;
+using Grasshopper.Kernel;
 
 namespace rn.viewmodels
 {
   public class FileViewModel : Rhino.UI.ViewModel
   {
-    public FileViewModel(FileInfo info)
+    
+    public FileViewModel(PanelViewModel parent, FileInfo info)
     {
+      Parent = parent;
       Location = info;
     }
 
+    public bool Enabled { get; set; } = true;
+
     private FileInfo _location;
+
+    public PanelViewModel Parent { get; }
+
     public FileInfo Location
     {
       get => _location;
@@ -42,7 +46,29 @@ namespace rn.viewmodels
       if (null == Location) return;
       if (!Location.Exists) return;
 
-      GrasshopperLoader.LoadGrasshopperFromFile(Location.FullName);
+      LoadGrasshopperFromFile(Location.FullName);
     }
+
+    public bool LoadGrasshopperFromFile(string path)
+    {
+      var io = new GH_DocumentIO();
+      if (!io.Open(path)) return false;
+
+      GH_Document ghDoc = io.Document;
+      Gui gui = Gui.Load(ghDoc);
+
+      var doc = Rhino.RhinoDoc.ActiveDoc;
+      var parent = RhinoEtoApp.MainWindowForDocument(doc);
+
+      gui.Closed += (s, e) => {
+        Parent.Enabled = true;
+      };
+
+      Parent.Enabled = false;
+      gui.ShowSemiModal(doc, parent);
+
+      return true;
+    }
+
   }
 }

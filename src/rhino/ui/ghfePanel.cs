@@ -1,4 +1,6 @@
-﻿using Eto.Forms;
+﻿using Eto.Drawing;
+using Eto.Forms;
+using Rhino.UI;
 using rn.viewmodels;
 using System;
 using System.Collections.Generic;
@@ -14,8 +16,13 @@ namespace rn.ui
   {
     public ghfePanel()
     {
-      PanelViewModel vm = new PanelViewModel();
+      var vm = PanelViewModel.Instance;
+
+
       DataContext = vm;
+
+      // allow for disabling the UI while a GH file is open
+      this.BindDataContext((Panel p) => p.Enabled, (PanelViewModel pvm) => pvm.Enabled);
 
       ListBox fileList = new ListBox();
       fileList.DataContext = vm;
@@ -38,15 +45,21 @@ namespace rn.ui
       Button button = new Button { Text = "Select path..." };
       button.Click += (o, a) => vm.Browse();
 
-      Content = new TableLayout
-      {
-        Rows =
-        {
-          scroller,
-          button,
-          null
-        }
-      };
+      var dl = new DynamicLayout();
+      dl.BeginVertical();
+      dl.Add(scroller,true, true);
+      dl.AddAutoSized(button, new Padding(0,0,5,5), xscale: true, yscale: false);
+      dl.EndVertical();
+
+
+      Content = dl;
+
+#if NETCOREAPP
+      this.UseRhinoStyle();
+      fileList.UseRhinoStyle();
+      button.UseRhinoStyle();
+#endif
     }
+
   }
 }
