@@ -17,7 +17,7 @@ using Rhino.Input;
 
 namespace lib;
 
-public class Gui : Dialog
+public class Gui : FloatingForm
 {
 
   private GViewModel? Model => DataContext as GViewModel;
@@ -41,9 +41,6 @@ public class Gui : Dialog
     Content = layout;
     this.Padding = 4;
     this.Resizable = true;
-
-    DefaultButton = run;
-    AbortButton = new();
   }
 
   public static Gui Load(GH_Document doc)
