@@ -120,7 +120,7 @@ internal class Gui : Form
   private static Control? ConvertComponent(IGH_Component component)
     => component switch
     {
-      GH_Group group => CreateGroup(group),
+      // GH_Group group => CreateGroup(group),
       GH_NumberSlider slider => CreateSlider(slider),
 
       _ => null
@@ -131,6 +131,10 @@ internal class Gui : Form
     var upDown = new NumericUpDownWithUnitParsing(true);
     upDown.Value = (double)slider.CurrentValue;
     // TODO : Add Min/Max
+
+    upDown.ValueChanged += (s, e) => {
+      slider.SetSliderValue((decimal)upDown.Value);
+    };
 
     return upDown;
   }
