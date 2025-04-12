@@ -42,5 +42,8 @@
     <Reference Include="$(PkgMicrosoft_NETFramework_ReferenceAssemblies_net48)\build\.NETFramework\v4.8\System.Windows.Forms.dll" Private="False" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" ExcludeAssets="runtime" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\lib\lib.csproj" />
+  </ItemGroup>
 
 </Project>

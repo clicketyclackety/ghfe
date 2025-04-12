@@ -17,16 +17,23 @@ namespace lib
         {
             var activeObjects = new List<GH_ActiveObject>();
             var allObjects = document.Objects;
-            foreach (var obj in allObjects) {
-                if (obj is GH_Group) {
-                    if (obj.Name == UIGroupName) {
+            group = null;
+            foreach (var obj in allObjects)
+            {
+                if (obj is GH_Group)
+                {
+                    if (obj.NickName == UIGroupName)
+                    {
+                        group = obj as GH_Group;
                         return true;
                     }
-                    var groupObj = obj as GH_Group;
-                    groupObj.
-                    activeObjects.Add(scriptInstance);
+                }
+                else
+                {
+                    //return false;
                 }
             }
-            return activeObjects;
+            return true;
         }
     }
+}
