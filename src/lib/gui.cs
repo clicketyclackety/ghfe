@@ -13,6 +13,7 @@ using Grasshopper.Kernel.Types;
 using lib.DTO;
 using Rhino.Geometry;
 using Rhino.UI;
+using Rhino.Input;
 
 namespace lib;
 
@@ -111,8 +112,10 @@ public class Gui : Dialog
       Param_String str => CreateTextInput(str),
       GH_NumberSlider slider => CreateSlider(slider),
       GH_Panel panel => CreateLabel(panel),
-      Param_Curve curve => GetGeometryButton<Curve>(curve),
-      Param_Point point => GetGeometryButton<Rhino.Geometry.Point>(point),
+      
+      Param_Curve curve => PickCurve(GetGeometryButton(curve), curve),
+      Param_Point point => PickPoint(GetGeometryButton(point), point),
+      // Param_Geometry geom => GetGeometryButton<GeometryBase>(geom),
 
       _ => null
     };
@@ -125,17 +128,43 @@ public class Gui : Dialog
     return control;
   }
 
-  private Control? GetGeometryButton<TGeom>(IGH_Param param) where TGeom : GeometryBase
+  private Button? PickPoint(Button button, Param_Point param)
+  {
+    button.Click += (s, e) => {
+      this.PushPickButton((sender, args) => {
+
+        if (RhinoGet.GetPoint("Point", true, out var point) == Rhino.Commands.Result.Success)
+        {
+          // TODO : 
+          // param.CollectData();
+        }
+      });
+    };
+
+    return button;
+  }
+
+  private Button? PickCurve(Button button, Param_Curve param)
+  {
+    button.Click += (s, e) => {
+      this.PushPickButton((sender, args) => {
+
+        if (RhinoGet.GetPolyline(out var polyline) == Rhino.Commands.Result.Success)
+        {
+          // TODO : 
+          // param.CollectData();
+        }
+      });
+    };
+
+    return button;
+  }
+
+  private Button? GetGeometryButton(IGH_Param param)
   {
     var button = new Button()
     {
       Text = $"Choose {param.NickName}",
-    };
-
-    button.Click += (s, e) => {
-      this.PushPickButton((sender, args) => {
-        Rhino.RhinoApp.WriteLine("pick something!");
-      });
     };
 
     return button;
