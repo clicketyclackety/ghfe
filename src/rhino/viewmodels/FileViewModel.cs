@@ -65,7 +65,7 @@ namespace rn.viewmodels
       };
 
       Parent.Enabled = false;
-      gui.Show();
+      gui.ShowSemiModal(doc, parent);
 
       return true;
     }
