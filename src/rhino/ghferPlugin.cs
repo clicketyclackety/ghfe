@@ -3,6 +3,7 @@ using Eto.Forms;
 using Rhino;
 using Rhino.PlugIns;
 using rn.ui;
+using rn.viewmodels;
 
 namespace rn;
 
@@ -27,6 +28,13 @@ public class ghferPlugin : Rhino.PlugIns.PlugIn
   {
     var icon = Rhino.UI.DrawingUtilities.IconFromResource("rn.Properties.Resources.ghfe-icon", typeof(ghferCommand).Assembly);
     Rhino.UI.Panels.RegisterPanel(Instance, typeof(ghfePanel), "GHFE Files", icon);
+
+    if (Settings.TryGetString(SELECTED_FOLDER_NAME, out string value))
+    {
+      var dir = new System.IO.DirectoryInfo(value);
+      if (dir.Exists)
+        PanelViewModel.Instance.LastSelectedDirectory = dir;
+    }
     return base.OnLoad(ref errorMessage);
   }
 
@@ -36,4 +44,12 @@ public class ghferPlugin : Rhino.PlugIns.PlugIn
   // You can override methods here to change the plug-in behavior on
   // loading and shut down, add options pages to the Rhino _Option command
   // and maintain plug-in wide options in a document.
+
+  const string SELECTED_FOLDER_NAME = nameof(SELECTED_FOLDER_NAME);
+  protected override void OnShutdown()
+  {
+    if (null != PanelViewModel.Instance.LastSelectedDirectory)
+      Settings.SetString(SELECTED_FOLDER_NAME, PanelViewModel.Instance.LastSelectedDirectory.FullName);
+    base.OnShutdown();
+  }
 }
