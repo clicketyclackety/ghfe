@@ -10,7 +10,7 @@ namespace lib.DTO
 {
     public class RowLeaf : IRowElement
     {
-        public string Name => "Leaf";
+        public string Name => "ROW OF CONTROLS";
         public List<IGH_DocumentObject> Components { get; set; } = new List<IGH_DocumentObject>();
     }
 }

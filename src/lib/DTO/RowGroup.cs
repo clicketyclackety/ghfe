@@ -10,7 +10,7 @@ namespace lib.DTO
 {
     public class RowGroup : IRowElement
     {
-        public string Name => "Group";
+        public string Name => "EXPANDER (GROUP OF ROWS)";
         public List<IRowElement> Children { get; set; } = new List<IRowElement>();
     }
 }

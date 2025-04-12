@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Special;
 
 using Rhino.Geometry;
 
@@ -50,6 +51,10 @@ namespace lib
 
             for (int i = 0; i < n; i++) {
                 for (int j = i + 1; j < n; j++) {
+                    bool isGroupI = sortedComponents[i] is GH_Group;
+                    bool isGroupJ = sortedComponents[j] is GH_Group;
+                    if (isGroupI != isGroupJ)
+                        continue; // Skip unioning a group with a non-group.
                     if (IntervalsOverlap(intervals[i], intervals[j])) {
                         Union(i, j);
                     }
