@@ -11,10 +11,12 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
 using lib.DTO;
+using Rhino.Geometry;
+using Rhino.UI;
 
 namespace lib;
 
-public class Gui : Form
+public class Gui : Dialog
 {
 
   private GViewModel? Model => DataContext as GViewModel;
@@ -37,19 +39,22 @@ public class Gui : Form
 
     Content = layout;
     this.Padding = 4;
+    this.Resizable = true;
+
+    DefaultButton = run;
+    AbortButton = new();
   }
 
   public static Gui Load(GH_Document doc)
   {
     var viewModel = new GViewModel(doc);
     var gui = new Gui(viewModel);
-
     return gui;
   }
 
   #region Eto Creation
 
-  public static Control? CreateRow(RowGroup row)
+  private Control? CreateRow(RowGroup row)
   {
     DynamicLayout layout = new();
     layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
@@ -63,7 +68,7 @@ public class Gui : Form
     return layout;
   }
 
-  private static Control? ConvertRowGroup(IRowElement rowItem)
+  private Control? ConvertRowGroup(IRowElement rowItem)
     => rowItem switch
     {
       RowLeaf leaf => GetMultipleRow(leaf.Components),
@@ -72,7 +77,7 @@ public class Gui : Form
       _ => null
     };
 
-  private static Control? GetMultipleRow(List<IGH_DocumentObject> components)
+  private Control? GetMultipleRow(List<IGH_DocumentObject> components)
   {
     DynamicLayout layout = new();
     layout.BeginHorizontal();
@@ -89,7 +94,7 @@ public class Gui : Form
 
   #region GH to Eto
 
-  public static Control? ConvertGrasshopperObject(IGH_DocumentObject aObject)
+  public Control? ConvertGrasshopperObject(IGH_DocumentObject aObject)
     => aObject switch
     {
       IGH_Component component => ConvertComponent(component),
@@ -98,7 +103,7 @@ public class Gui : Form
       _ => null
     };
 
-  private static Control? ConvertParam(IGH_Param param)
+  private Control? ConvertParam(IGH_Param param)
   {
     var control = param switch
     {
@@ -106,6 +111,8 @@ public class Gui : Form
       Param_String str => CreateTextInput(str),
       GH_NumberSlider slider => CreateSlider(slider),
       GH_Panel panel => CreateLabel(panel),
+      Param_Curve curve => GetGeometryButton<Curve>(curve),
+      Param_Point point => GetGeometryButton<Rhino.Geometry.Point>(point),
 
       _ => null
     };
@@ -118,13 +125,30 @@ public class Gui : Form
     return control;
   }
 
+  private Control? GetGeometryButton<TGeom>(IGH_Param param) where TGeom : GeometryBase
+  {
+    var button = new Button()
+    {
+      Text = $"Choose {param.NickName}",
+    };
+
+    button.Click += (s, e) => {
+      this.PushPickButton((sender, args) => {
+        Rhino.RhinoApp.WriteLine("pick something!");
+      });
+    };
+
+    return button;
+  }
+
   private static Control? CreateLabel(GH_Panel panel)
   {
     return new Label()
     {
       Text = panel.UserText,
       Height = 20,
-      TextAlignment = TextAlignment.Left,
+      TextAlignment = TextAlignment.Center,
+      TextColor = Colors.Gray,
     };
   }
 
@@ -153,7 +177,7 @@ public class Gui : Form
     var label = new Label()
     {
       Text = title,
-      Width = 80,
+      Width = 120,
       Wrap = WrapMode.None,
     };
     
@@ -221,7 +245,7 @@ public class Gui : Form
   //   var values = type.Select(d => d.Value)
   // }
 
-  private static Control? CreateGroup(RowGroup group)
+  private Control? CreateGroup(RowGroup group)
   {
     var etoGroup = new Eto.Forms.Expander();
     var layout = new DynamicLayout();
