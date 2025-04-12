@@ -78,7 +78,7 @@ namespace lib
         public static bool TryGetUIRowGroup(GH_Document ghDoc, out RowGroup rowGroup)
         {
             bool groupExists = TryGetGroup(ghDoc, UIGroupName, out var group);
-            rowGroup = new RowGroup(); // root
+            rowGroup = new RowGroup(name: "UI"); // root
             if (groupExists) {
                 var hierarchy = ScriptScanner.BuildGroupHierarchy(ghDoc, group);
                 rowGroup = hierarchy.ToRowGroup();
@@ -95,7 +95,7 @@ namespace lib
 
             public RowGroup ToRowGroup()
             {
-                var rowGroup = new RowGroup();
+                var rowGroup = new RowGroup(Group.NickName);
                 var allElements = DirectComponents.ToList();
                 allElements.AddRange(NestedGroup.Select(ng => ng.Group));
                 var rows = ComponentGrouper.FormRows(allElements);
