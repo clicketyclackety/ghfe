@@ -1,4 +1,7 @@
 # Gh-For-Everyone
+
+![Master_Optimised](https://github.com/user-attachments/assets/704d1b15-c814-44d9-bfe7-ba257354dff3)
+
 Grasshopper for everyone! The Lazy Genius Way. Gh-For-Everyone was developed during the 2025 London AEC Tech hackathon organised by CORE studio/Thornton Tomasetti and hosted by Fosters + Partners as part of the Shape to Fabrication Conference.
 
 Tired of explaining how to open a Grasshopper script for the 50th time? :cricket:
