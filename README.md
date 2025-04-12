@@ -69,9 +69,9 @@ For any issues you want to help solve, open a Pull Request and link the issue. T
 ## Useful Resources
 Snazzy links to help you get started, debug and learn!
 
-[Rhino]([url](https://www.rhino3d.com/download/))
-[Rhino Forums]([url](https://discourse.mcneel.com/))
-[Rhino API]([url](https://developer.rhino3d.com/api/rhinocommon/?version=8.x))
+[Rhino](https://www.rhino3d.com/download/)
+[Rhino Forums](https://discourse.mcneel.com/)
+[Rhino API](https://developer.rhino3d.com/api/rhinocommon/?version=8.x)
 
 ### Licensing
-This project is [MIT]([url](https://www.tldrlegal.com/license/mit-license))! Use it for anything you like, free of charge!
+This project is [MIT](https://www.tldrlegal.com/license/mit-license)! Use it for anything you like, free of charge!
