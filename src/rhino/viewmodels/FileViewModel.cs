@@ -64,11 +64,7 @@ namespace rn.viewmodels
         Parent.Enabled = true;
       };
 
-      // Application.Instance.InvokeAsync(() => {
-      //   gui.ShowSemiModal(doc, parent);
-      //   this.Enabled = false;
-      // });
-
+      Parent.Enabled = false;
       gui.Show();
 
       return true;

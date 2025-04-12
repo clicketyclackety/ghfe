@@ -1,4 +1,5 @@
 ﻿using Eto.Forms;
+using Rhino.UI;
 using rn.viewmodels;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace rn.ui
     public ghfePanel()
     {
       var vm = PanelViewModel.Instance;
-    
+
+
       DataContext = vm;
 
       // allow for disabling the UI while a GH file is open
@@ -51,6 +53,12 @@ namespace rn.ui
           null
         }
       };
+
+#if NETCOREAPP
+      this.UseRhinoStyle();
+      fileList.UseRhinoStyle();
+      button.UseRhinoStyle();
+#endif
     }
 
   }

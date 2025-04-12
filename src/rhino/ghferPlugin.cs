@@ -26,7 +26,8 @@ public class ghferPlugin : Rhino.PlugIns.PlugIn
 
   protected override LoadReturnCode OnLoad(ref string errorMessage)
   {
-    var icon = Rhino.UI.DrawingUtilities.IconFromResource("rn.Properties.Resources.ghfe-icon", typeof(ghferCommand).Assembly);
+    var icon = Rhino.UI.DrawingUtilities.IconFromResource("rn.Properties.Resources.ghfe-icon", 
+      typeof(ghferCommand).Assembly);
     Rhino.UI.Panels.RegisterPanel(Instance, typeof(ghfePanel), "GHFE Files", icon);
 
     if (Settings.TryGetString(SELECTED_FOLDER_NAME, out string value))
