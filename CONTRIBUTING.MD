@@ -1,7 +1,7 @@
 
 # Welcome! Welcome! Welcome!
 
->First off, thank you for considering contributing to **Rhino Anywhere!**. It's people like you that make the world a better place!
+>First off, thank you for considering contributing to **Gh-For-Everyone!**. It's people like you that make the world a better place!
 
 ### Guidelines
 
@@ -13,9 +13,7 @@
 > * Ensure that all code is made lovingly
 > * Create a discussion for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 > * Keep feature versions as small as possible, preferably one new feature per version.
-> * Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. I think Python's Code of Conduct sums it up nicely.
->
->   👉 [Python Code of Conduct](https://www.python.org/psf/codeofconduct/).
+> * Be welcoming to newcomers and encourage diverse new contributors from all backgrounds.
 
 # Your First Contribution
 
@@ -29,9 +27,6 @@
 >
 > You may feel like the only productive contribution is `code`. But that's not true! Any and all engagement helps the project, so give yourself a little pat on the back 😊!
 >
-> You can start by looking through
->   [these](https://github.com/rhino-anywhere/rhino-anywhere-plugin/labels/Beginner%20issues)
->   [and these](https://github.com/rhino-anywhere/rhino-anywhere-frontend/labels/Beginner%20issues)beginner and help-wanted issues:
 > Beginner issues - issues which should only require a few lines of code, and a test or two.
 > Help wanted issues - issues which should be a bit more involved than beginner issues.
 > Both issue lists are sorted by total number of comments. While not perfect, number of comments is a reasonable proxy for impact a given change will have.
