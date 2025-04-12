@@ -10,7 +10,7 @@
 ## Ground Rules
 
 > Responsibilities
-> * Ensure that all code is made lovingly
+> * Ensure that all code is made lovingly.
 > * Create a discussion for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 > * Keep feature versions as small as possible, preferably one new feature per version.
 > * Be welcoming to newcomers and encourage diverse new contributors from all backgrounds.
@@ -25,7 +25,7 @@
 
 ## New to open-source?
 
-So are many of us! Here are a couple of friendly tutorials you can peruse
+So are many of us! Here are a couple of friendly tutorials you can peruse:
 
 👉 [Make a Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
 
