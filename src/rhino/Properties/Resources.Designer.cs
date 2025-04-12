@@ -59,15 +59,5 @@ namespace rn.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] ghfe_icon {
-            get {
-                object obj = ResourceManager.GetObject("ghfe-icon", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

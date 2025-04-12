@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace rn.ui
 {
   [Guid("ADF7FDF3-7E53-4F8D-92E8-552B58915D29")]
-  public class ghfePanel : Eto.Forms.FloatingForm
+  public class ghfePanel : Eto.Forms.Panel
   {
     public ghfePanel()
     {
