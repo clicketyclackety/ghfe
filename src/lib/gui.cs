@@ -1,38 +1,89 @@
 using Eto.Forms;
+
+using Rhino.UI.Controls;
+
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Components;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Special;
-using Rhino.UI.Controls;
+using lib.DTO;
 
 namespace lib;
 
-public class Gui
+internal class Gui : Form
 {
 
-  public static Gui Load()
+  private GViewModel? Model => DataContext as GViewModel;
+
+  private Gui(GViewModel viewModel)
   {
-    throw new NotImplementedException("woops");
+    DataContext = viewModel;
+
+    var run = new Button() { Text = "Run!" };
+    run.Click += (s,e) => Model?.Run();
+
+    var child = CreateRow(viewModel.Sorted);
+
+    var layout = new DynamicLayout();
+    layout.BeginHorizontal();
+    layout.Add(child, true, false);
+    layout.AddSpace();
+    layout.Add(run, true, false);
+    layout.EndHorizontal();
+
+    Content = layout;
   }
 
-#region Eto Creation
+  public static Gui Load(GH_Document doc)
+  {
+    var viewModel = new GViewModel(doc);
+    var sorted = viewModel.GetSortedRows();
+    var gui = new Gui(viewModel);
 
-  public static Control? CreateRow(List<IGH_DocumentObject> rowItems)
+    return gui;
+  }
+
+  #region Eto Creation
+
+  public static Control? CreateRow(RowGroup row)
   {
     DynamicLayout layout = new();
     layout.BeginHorizontal();
-    foreach(var rowItem in rowItems)
+
+    foreach(var rowItem in row.Children)
     {
-      var rowControl = ConvertGrasshopperObject(rowItem);
+      var rowControl = ConvertRowGroup(rowItem);
       layout.Add(rowControl, true, false);
     }
     layout.EndHorizontal();
     return layout;
   }
 
-#endregion
+  private static Control? ConvertRowGroup(IRowElement rowItem)
+    => rowItem switch
+    {
+      RowLeaf leaf => GetMultipleRow(leaf.Components),
+      RowGroup group => CreateGroup(group),
 
-#region GH to Eto
+      _ => null
+    };
+
+  private static Control? GetMultipleRow(List<IGH_DocumentObject> components)
+  {
+    DynamicLayout layout = new();
+    layout.BeginHorizontal();
+    foreach(var component in components)
+    {
+      var etoControl = ConvertGrasshopperObject(component);
+    layout.Add(etoControl, true, false);
+    }
+    layout.EndHorizontal();
+    return layout;
+  }
+
+  #endregion
+
+  #region GH to Eto
 
   public static Control? ConvertGrasshopperObject(IGH_DocumentObject aObject)
     => aObject switch
@@ -84,15 +135,15 @@ public class Gui
     return upDown;
   }
 
-  private static Control? CreateGroup(GH_Group group)
+  private static Control? CreateGroup(RowGroup group)
   {
     var etoGroup = new Eto.Forms.Expander();
     var layout = new DynamicLayout();
     layout.BeginVertical();
     
-    foreach(var groupChild in group.Objects())
+    foreach(var groupChild in group.Children)
     {
-      var etoChild = ConvertGrasshopperObject(groupChild);
+      var etoChild = ConvertRowGroup(groupChild);
       layout.Add(etoChild, true, false);
     }
 
