@@ -29,6 +29,8 @@ public class Gui : FloatingForm
     var run = new Button() { Text = "Run!" };
     run.Click += (s,e) => Model?.Run();
 
+    // TODO : Cancel Button
+
     var child = CreateRow(viewModel.Sorted);
 
     var layout = new DynamicLayout();
@@ -41,6 +43,8 @@ public class Gui : FloatingForm
     Content = layout;
     this.Padding = 4;
     this.Resizable = true;
+    this.Title = viewModel.Sorted.Name;
+    this.MinimumSize = new Size(200, 400);
   }
 
   public static Gui Load(GH_Document doc)
@@ -113,6 +117,10 @@ public class Gui : FloatingForm
       Param_Curve curve => PickCurve(GetGeometryButton(curve), curve),
       Param_Point point => PickPoint(GetGeometryButton(point), point),
       // Param_Geometry geom => GetGeometryButton<GeometryBase>(geom),
+
+      // TODO : Boolean Toggle / CheckBox
+
+      // TODO : Buttons
 
       _ => null
     };
@@ -273,7 +281,6 @@ public class Gui : FloatingForm
 
   private Control? CreateGroup(RowGroup group)
   {
-    var etoGroup = new Eto.Forms.Expander();
     var layout = new DynamicLayout();
     layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
     
@@ -285,12 +292,14 @@ public class Gui : FloatingForm
 
     layout.EndVertical();
 
-    return etoGroup;
-  }
+    var etoGroup = new Eto.Forms.Expander()
+    {
+      Expanded = true,
+      Header = group.Name,
+      Content = layout,
+    };
 
-  public Dialog GetDialog()
-  {
-    return null;
+    return etoGroup;
   }
 
 #endregion
