@@ -1,5 +1,5 @@
 
-# Welcome! Welcome! Welcome!
+# Welcome! :partying_face:
 
 >First off, thank you for considering contributing to **Gh-For-Everyone!**. It's people like you that make the world a better place!
 
