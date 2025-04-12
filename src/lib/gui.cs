@@ -7,6 +7,7 @@ using Grasshopper.Kernel.Components;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Special;
 using lib.DTO;
+using Eto.Drawing;
 
 namespace lib;
 
@@ -122,9 +123,22 @@ internal class Gui : Form
     {
       // GH_Group group => CreateGroup(group),
       GH_NumberSlider slider => CreateSlider(slider),
-
+      GH_Scribble scribble => CreateTitle(scribble),
       _ => null
     };
+
+    private static Control? CreateTitle(GH_Scribble scribble)
+  {
+    var title = new Eto.Forms.Label
+    {
+      Text = scribble.Text,
+      Font = new Font(SystemFont.Default),
+      TextColor = Colors.Black,
+      VerticalAlignment = VerticalAlignment.Center,
+      TextAlignment = TextAlignment.Left
+    };
+    return title;
+  }
 
   private static Control? CreateSlider(GH_NumberSlider slider)
   {
