@@ -17,7 +17,7 @@ using Rhino.Input;
 
 namespace lib;
 
-public class Gui : Dialog
+public class Gui : FloatingForm
 {
 
   private GViewModel? Model => DataContext as GViewModel;
@@ -28,6 +28,8 @@ public class Gui : Dialog
 
     var run = new Button() { Text = "Run!" };
     run.Click += (s,e) => Model?.Run();
+
+    // TODO : Cancel Button
 
     var child = CreateRow(viewModel.Sorted);
 
@@ -41,9 +43,8 @@ public class Gui : Dialog
     Content = layout;
     this.Padding = 4;
     this.Resizable = true;
-
-    DefaultButton = run;
-    AbortButton = new();
+    this.Title = viewModel.Sorted.Name;
+    this.MinimumSize = new Size(200, 80);
   }
 
   public static Gui Load(GH_Document doc)
@@ -116,6 +117,10 @@ public class Gui : Dialog
       Param_Curve curve => PickCurve(GetGeometryButton(curve), curve),
       Param_Point point => PickPoint(GetGeometryButton(point), point),
       // Param_Geometry geom => GetGeometryButton<GeometryBase>(geom),
+
+      // TODO : Boolean Toggle / CheckBox
+
+      // TODO : Buttons
 
       _ => null
     };
@@ -276,7 +281,6 @@ public class Gui : Dialog
 
   private Control? CreateGroup(RowGroup group)
   {
-    var etoGroup = new Eto.Forms.Expander();
     var layout = new DynamicLayout();
     layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
     
@@ -288,12 +292,14 @@ public class Gui : Dialog
 
     layout.EndVertical();
 
-    return etoGroup;
-  }
+    var etoGroup = new Eto.Forms.Expander()
+    {
+      Expanded = true,
+      Header = group.Name,
+      Content = layout,
+    };
 
-  public Dialog GetDialog()
-  {
-    return null;
+    return etoGroup;
   }
 
 #endregion

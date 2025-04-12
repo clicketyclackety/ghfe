@@ -60,12 +60,14 @@ namespace rn.viewmodels
       var doc = Rhino.RhinoDoc.ActiveDoc;
       var parent = RhinoEtoApp.MainWindowForDocument(doc);
 
-      gui.Closed += (s, e) => {
+      gui.Closed += (s, e) =>
+      {
         Parent.Enabled = true;
       };
 
       Parent.Enabled = false;
-      gui.ShowSemiModal(doc, parent);
+      gui.ShowInTaskbar = false;
+      gui.Show(doc);
 
       return true;
     }
