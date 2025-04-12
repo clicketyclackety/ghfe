@@ -1,4 +1,5 @@
 ﻿using Eto.Forms;
+using rn.viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,37 @@ namespace rn.ui
   {
     public ghfePanel()
     {
+      PanelViewModel vm = new PanelViewModel();
+      DataContext = vm;
+
+      ListBox fileList = new ListBox();
+      fileList.DataContext = vm;
+      fileList.DataStore = vm.Files;
+      fileList.SelectedValueBinding.BindDataContext(nameof(PanelViewModel.SelectedFile));
+      fileList.MouseDoubleClick += (o, a) =>
+      {
+        if (vm.SelectedFile.Run.CanExecute(null))
+        {
+          vm.SelectedFile.Run.Execute(null);
+        }
+      };
+
+      Scrollable scroller = new Scrollable
+      {
+        MinimumSize = new Eto.Drawing.Size(50, 200),
+        Content = fileList
+      };
+
+      Button button = new Button { Text = "Select path..." };
+      button.Click += (o, a) => vm.Browse();
+
       Content = new TableLayout
       {
         Rows =
         {
-          new Button
-          {
-            MinimumSize = new Eto.Drawing.Size(200,100),
-            Text = "click me!"
-
-          }
+          scroller,
+          button,
+          null
         }
       };
     }
