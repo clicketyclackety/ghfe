@@ -21,16 +21,16 @@ We love HumanUI, Synapse, Suimple, UI+, and all the great work out there. But so
 
 - Get a simple UI up and running in under 60 seconds.
 - Avoid maintaining a second, custom UI every time you tweak your script.
-- Let non-GH users run your logic without ever seeing the mess
+- Let non-GH users run your logic without ever seeing the mess.
 - **Gh-For-Everyone** is your minimal-effort, maximum-impact solution.
 
 ## :wrench: Features
-- Auto-parses inputs
-- Supports multiple data types
-- Live updates when you change stuff
-- Custom labels and descriptions
-- UI stays synced with your Grasshopper logic
-- Probably more by the time you read this ~~(or probably not as this has been developed in 26 hours)~~
+- Auto-parses inputs.
+- Supports multiple data types.
+- Live updates when you change stuff.
+- Custom labels and descriptions.
+- UI stays synced with your Grasshopper logic.
+- Probably more by the time you read this ~~(or probably not as this has been developed in 26 hours).~~
 
 ## :rocket: Getting Started
 1. Open the Package Manager, search for "ghfe" and install it.
@@ -45,17 +45,18 @@ We love HumanUI, Synapse, Suimple, UI+, and all the great work out there. But so
 This is an early version, expect a few quirks, weird behaviors, and missing polish. But also expect it to save you *loads* of time and sanity. We’re building this out with love (and caffeine) :coffee:. Your feedback, feature ideas, and bug reports are super welcome.
 
 ## :busts_in_silhouette: Who’s This For?
-- Designers making tools for non-GH teammates
-- Devs prototyping UI quickly
+- Designers making tools for non-GH teammates.
+- Devs prototyping UI quickly.
 - Anyone who’s ever thought “There has to be an easier way…”
 
 ## Team members
-- Callum Sykes
+
 - Attila Nagy
-- Alfredo Chavez
-- Kohei Hayashi
-- Krzysztof Nazar
+- Callum Sykes
 - Matt Harwood
+- Kohei Hayashi
+- Alfredo Chavez
+- Krzysztof Nazar
 - Menno Deij - van Rijswijk
 
 ## Contributtion Guidelines
@@ -67,11 +68,11 @@ For any issues you want to help solve, open a Pull Request and link the issue. T
 ## Useful Resources
 Snazzy links to help you get started, debug and learn!
 
-[Rhino](https://www.rhino3d.com/download/)
+👉 [Rhino](https://www.rhino3d.com/download/)
 
-[Rhino Forums](https://discourse.mcneel.com/)
+👉 [Rhino Forums](https://discourse.mcneel.com/)
 
-[Rhino API](https://developer.rhino3d.com/api/rhinocommon/?version=8.x)
+👉 [Rhino API](https://developer.rhino3d.com/api/rhinocommon/?version=8.x)
 
 ### Licensing
 This project is [MIT](https://www.tldrlegal.com/license/mit-license)! Use it for anything you like, free of charge!
