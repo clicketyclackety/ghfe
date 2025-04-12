@@ -76,7 +76,7 @@ namespace lib
             return componentsIn;
         }
 
-        public static bool TryGetUIGroup(GH_Document ghDoc, out RowGroup rowGroup)
+        public static bool TryGetUIRowGroup(GH_Document ghDoc, out RowGroup rowGroup)
         {
             bool groupExists = TryGetGroup(ghDoc, UIGroupName, out var group);
             rowGroup = new RowGroup(); // root
