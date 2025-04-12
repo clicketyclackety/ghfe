@@ -80,23 +80,9 @@ namespace lib
             bool groupExists = TryGetGroup(ghDoc, UIGroupName, out var group);
             rowGroup = new RowGroup(); // root
             if (groupExists) {
-                var rows = ComponentGrouper.FormRows(GetComponentsVisuallyContainedInGroup(ghDoc, group));
-                for (int i = 0; i < rows.Count; i++) {
-                    RowLeaf row = new RowLeaf();
-                    bool isValidRow = false;
-                    for (int j = 0; j < rows[i].Count; j++) {
-                        if (rows[i][j] is not GH_Group) {
-                            isValidRow = true;
-                            row.Components.Add(rows[i][j]);
-                        }
-                    }
-                    if (isValidRow) {
-                        rowGroup.Children.Add(row);
-                    }
-                }
-                if (rowGroup.Children.Count > 0) {
-                    return true;
-                }
+                var hierarchy = ScriptScanner.BuildGroupHierarchy(ghDoc, group);
+                rowGroup = hierarchy.ToRowGroup();
+                return true;
             }
             return false;
         }
