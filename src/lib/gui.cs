@@ -44,7 +44,7 @@ public class Gui : FloatingForm
     this.Padding = 4;
     this.Resizable = true;
     this.Title = viewModel.Sorted.Name;
-    this.MinimumSize = new Size(200, 400);
+    this.MinimumSize = new Size(200, 80);
   }
 
   public static Gui Load(GH_Document doc)
