@@ -23,7 +23,31 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <None Remove="EmbeddedResources\plugin-utility.ico" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="EmbeddedResources\plugin-utility.ico" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="RhinoCommon" Version="8.0.23304.9001" ExcludeAssets="runtime" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.4" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   
 </Project>
