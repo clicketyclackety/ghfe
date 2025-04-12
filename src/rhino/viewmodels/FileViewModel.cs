@@ -9,14 +9,19 @@ namespace rn.viewmodels
 {
   public class FileViewModel : Rhino.UI.ViewModel
   {
-    public FileViewModel(FileInfo info)
+    
+    public FileViewModel(PanelViewModel parent, FileInfo info)
     {
+      Parent = parent;
       Location = info;
     }
 
     public bool Enabled { get; set; } = true;
 
     private FileInfo _location;
+
+    public PanelViewModel Parent { get; }
+
     public FileInfo Location
     {
       get => _location;
@@ -56,7 +61,7 @@ namespace rn.viewmodels
       var parent = RhinoEtoApp.MainWindowForDocument(doc);
 
       gui.Closed += (s, e) => {
-        this.Enabled = true;
+        Parent.Enabled = true;
       };
 
       // Application.Instance.InvokeAsync(() => {

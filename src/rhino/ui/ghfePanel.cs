@@ -14,8 +14,12 @@ namespace rn.ui
   {
     public ghfePanel()
     {
-      PanelViewModel vm = new PanelViewModel();
+      var vm = PanelViewModel.Instance;
+    
       DataContext = vm;
+
+      // allow for disabling the UI while a GH file is open
+      this.BindDataContext((Panel p) => p.Enabled, (PanelViewModel pvm) => pvm.Enabled);
 
       ListBox fileList = new ListBox();
       fileList.DataContext = vm;
@@ -48,5 +52,6 @@ namespace rn.ui
         }
       };
     }
+
   }
 }
