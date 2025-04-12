@@ -1,11 +1,11 @@
 # Gh-For-Everyone
 Grasshopper for everyone! The Lazy Genius Way. Gh-For-Everyone was developed during the 2025 London AEC Tech hackathon organised by CORE studio at Thornton Tomasetti and hosted by Fosters + Partners as part of the Shape to Fabrication Conference.
 
-Tired of explaining how to open a Grasshopper script for the 50th time?
-Wish your inputs magically turned into a usable UI without lifting a finger?
+Tired of explaining how to open a Grasshopper script for the 50th time?:cricket:
+Wish your inputs magically turned into a usable UI without lifting a finger?:point_up:
 You’re in the right place.
 
-Welcome to **Gh-For-Everyone** – the *easiest*, *cleanest*, and *least soul-crushing* way to turn your Grasshopper scripts into real, usable interfaces. :hammer_and_wrench: Whether you’re building tools for teammates, clients, or that one coworker who still speaks about the "Grasshopper spaghetti", we’ve got you.
+Welcome to **Gh-For-Everyone**, the *easiest*, *cleanest*, and *least soul-crushing* way to turn your Grasshopper scripts into real, usable interfaces. :hammer_and_wrench: Whether you’re building tools for teammates, clients, or that one coworker who still speaks about the "Grasshopper spaghetti", we’ve got you.
 
 ## :dart: What It Does (aka Why You’ll Love It)
 - :package: **Auto-Generates UI**: You already group and label your inputs like a civilized GH user — we take that and turn it into an interface. No extra components. No Remote Control Panels. No yak shaving.
@@ -23,15 +23,6 @@ We love HumanUI, Synapse, Suimple, UI+, and all the great work out there. But so
 
 - **Gh-For-Everyone** is your minimal-effort, maximum-impact solution.
 
-## Team members
-- Callum Sykes
-- Attila Nagy
-- Alfredo Chavez
-- Kohei Hayashi
-- Krzysztof Nazar
-- Matt Harwood
-- Menno Deij - van Rijswijk
-
 ## Architecture
 Gh-For-Everyone consist on a Rhino plugin that you can find in Food4Rhino, GitHub and the Rhino Package Manager.
 
@@ -45,27 +36,38 @@ Gh-For-Everyone consist on a Rhino plugin that you can find in Food4Rhino, GitHu
 7. No seriously, that’s it.
 
 ## :wrench: Features
-- Auto-parses inputs and outputs
+- Auto-parses inputs
 - Supports multiple data types
 - Live updates when you change stuff
 - Custom labels and descriptions
 - UI stays synced with your Grasshopper logic
-- Probably more by the time you read this
+- Probably more by the time you read this (or probably not as this has been developed in 26 hours)
 
 ## :test_tube: Still a Prototype (But a Very Cool One)
-This is an early version — expect a few quirks, weird behaviors, and missing polish. But also expect it to save you *loads* of time and sanity. We’re building this out with love (and caffeine). Your feedback, feature ideas, and bug reports are super welcome.
+This is an early version, expect a few quirks, weird behaviors, and missing polish. But also expect it to save you *loads* of time and sanity. We’re building this out with love (and caffeine). Your feedback, feature ideas, and bug reports are super welcome.
 
 ## :busts_in_silhouette: Who’s This For?
 - Designers making tools for non-GH teammates
 - Devs prototyping UI quickly
 - Anyone who’s ever thought “There has to be an easier way…”
 
+## Team members
+- Callum Sykes
+- Attila Nagy
+- Alfredo Chavez
+- Kohei Hayashi
+- Krzysztof Nazar
+- Matt Harwood
+- Menno Deij - van Rijswijk
+
 ## Contributtion Guidelines
 We love contributions! Contributions keep open source alive! Please firstly take a look at any open issues, they're a great place to get started helping with users real issues.
 For any issues you want to help solve, open a Pull Request and link the issue. The original issue creator will be very excited to collaborate :grin:.
 
+[Contributing Guide](https://github.com/clicketyclackety/ghfe/blob/main/README.md)
+
 ## Useful Resources
-Handy dandy links to help you get started, debug and learn!
+Snazzy links to help you get started, debug and learn!
 
 [Rhino]([url](https://www.rhino3d.com/download/))
 [Rhino Forums]([url](https://discourse.mcneel.com/))
