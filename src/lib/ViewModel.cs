@@ -22,6 +22,7 @@ internal class GViewModel : INotifyPropertyChanged
   public GViewModel(GH_Document doc)
   {
     Doc = doc;
+    Sorted = GetSortedRows();
   }
 
   public event PropertyChangedEventHandler PropertyChanged;
@@ -33,6 +34,8 @@ internal class GViewModel : INotifyPropertyChanged
 
   internal RowGroup GetSortedRows()
   {
-    return Sorted = null;
+    ScriptScanner.TryGetUIRowGroup(Doc, out RowGroup group);
+    return group ?? new RowGroup();
   }
+
 }
