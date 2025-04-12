@@ -63,7 +63,7 @@ This is an early version, expect a few quirks, weird behaviors, and missing poli
 We love contributions! Contributions keep open source alive! Please firstly take a look at any open issues, they're a great place to get started helping with users real issues.
 For any issues you want to help solve, open a Pull Request and link the issue. The original issue creator will be very excited to collaborate :grin:.
 
-[Contributing Guide](https://github.com/clicketyclackety/ghfe/blob/main/CONTRIBUTING.md)
+[Contributing Guide](https://github.com/clicketyclackety/ghfe/blob/main/CONTRIBUTING.MD)
 
 ## Useful Resources
 Snazzy links to help you get started, debug and learn!
