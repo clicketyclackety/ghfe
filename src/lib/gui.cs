@@ -1,4 +1,5 @@
 using Eto.Forms;
+using Eto.Drawing;
 
 using Rhino.UI.Controls;
 
@@ -6,10 +7,10 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Components;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Special;
-using lib.DTO;
-using Eto.Drawing;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
+
+using lib.DTO;
 
 namespace lib;
 
@@ -28,13 +29,14 @@ public class Gui : Form
     var child = CreateRow(viewModel.Sorted);
 
     var layout = new DynamicLayout();
-    layout.BeginVertical();
+    layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
     layout.Add(child, true, false);
-    layout.AddSpace();
+    layout.AddSpace(true, true);
     layout.Add(run, true, false);
     layout.EndVertical();
 
     Content = layout;
+    this.Padding = 4;
   }
 
   public static Gui Load(GH_Document doc)
@@ -50,7 +52,7 @@ public class Gui : Form
   public static Control? CreateRow(RowGroup row)
   {
     DynamicLayout layout = new();
-    layout.BeginVertical();
+    layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
 
     foreach(var rowItem in row.Children)
     {
@@ -77,7 +79,7 @@ public class Gui : Form
     foreach(var component in components)
     {
       var etoControl = ConvertGrasshopperObject(component);
-    layout.Add(etoControl, true, false);
+      layout.Add(etoControl, true, false);
     }
     layout.EndHorizontal();
     return layout;
@@ -103,6 +105,7 @@ public class Gui : Form
       Param_Integer integer => GetNumberHandlerFromInteger(integer),
       Param_String str => CreateTextInput(str),
       GH_NumberSlider slider => CreateSlider(slider),
+      GH_Panel panel => CreateLabel(panel),
 
       _ => null
     };
@@ -115,10 +118,23 @@ public class Gui : Form
     return control;
   }
 
+  private static Control? CreateLabel(GH_Panel panel)
+  {
+    return new Label()
+    {
+      Text = panel.UserText,
+      Height = 20,
+      TextAlignment = TextAlignment.Left,
+    };
+  }
+
   private static Control? GetNumberHandlerFromInteger(Param_Integer integer)
   {
-    var box = new TextBox();
-    return box;
+    var box = new NumericUpDownWithUnitParsing()
+    {
+      // Value = integer.Value
+    };
+    return WithLabel(integer.NickName, box);
   }
 
   private static Control? ConvertComponent(IGH_Component component)
@@ -209,7 +225,7 @@ public class Gui : Form
   {
     var etoGroup = new Eto.Forms.Expander();
     var layout = new DynamicLayout();
-    layout.BeginVertical();
+    layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
     
     foreach(var groupChild in group.Children)
     {
