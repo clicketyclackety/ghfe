@@ -70,7 +70,9 @@ For any issues you want to help solve, open a Pull Request and link the issue. T
 Snazzy links to help you get started, debug and learn!
 
 [Rhino](https://www.rhino3d.com/download/)
+
 [Rhino Forums](https://discourse.mcneel.com/)
+
 [Rhino API](https://developer.rhino3d.com/api/rhinocommon/?version=8.x)
 
 ### Licensing
