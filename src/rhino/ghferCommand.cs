@@ -22,9 +22,9 @@ public class ghferCommand : Command
 
   protected override Result RunCommand(RhinoDoc doc, RunMode mode)
   {
-    var panel = new ghfePanel();
-    panel.Show();// (RhinoEtoApp.MainWindow);
-    RhinoApp.WriteLine("The {0} command is under construction.", EnglishName);
+    //var panel = new ghfePanel();
+    //panel.Show();// (RhinoEtoApp.MainWindow);
+    //RhinoApp.WriteLine("The {0} command is under construction.", EnglishName);
     return Result.Success;
   }
 }
