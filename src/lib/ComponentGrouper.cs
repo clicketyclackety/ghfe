@@ -13,7 +13,6 @@ namespace lib
 {
     public static class ComponentGrouper
     {
-        public static List<List<>>
 
         /// <summary>
         /// Forms rows of components in the Grasshopper canvas.

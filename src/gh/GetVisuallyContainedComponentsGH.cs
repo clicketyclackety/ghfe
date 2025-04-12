@@ -10,10 +10,10 @@ using lib;
 
 namespace gh;
 
-public class ComponentGrouperGH : GH_Component
+public class GetVisuallyContainedComponentsGH : GH_Component
 {
-    public ComponentGrouperGH()
-      : base("Component Grouper", "ComponentGrouper",
+    public GetVisuallyContainedComponentsGH()
+      : base("Visually Contained", "VisuallyContained",
         "Groups components by rows",
         "Category", "Subcategory")
     {
@@ -26,7 +26,7 @@ public class ComponentGrouperGH : GH_Component
 
     protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
     {
-        pManager.AddTextParameter("Ordered Components", "OrderedComponents", "Components ordered by rows", GH_ParamAccess.tree);
+        pManager.AddTextParameter("Components Within", "ComponentsWithin", "Components visually contained by the group.", GH_ParamAccess.list);
     }
 
     /// <summary>
@@ -39,16 +39,10 @@ public class ComponentGrouperGH : GH_Component
         string groupName = string.Empty;
         DA.GetData(0, ref groupName);
 
-        DataTree<string> componentNames = new DataTree<string>();
-
         if (ScriptScanner.TryGetGroup(OnPingDocument(), groupName, out var group)) {
-            var rows = ComponentGrouper.FormRows(group.Objects());
-            for (int i = 0; i < rows.Count; i++) {
-                var row = rows[i];
-                var path = new GH_Path(i);
-                componentNames.AddRange(row.Select(x => x.Name), path);
-            }
-            DA.SetDataTree(0, componentNames);
+            var componentsIn = ScriptScanner.GetComponentsVisuallyContainedInGroup(OnPingDocument(), group);
+            var componentNames = componentsIn.Select(x => x.Name).ToList();
+            DA.SetDataList(0, componentNames);
         }
 
         else {
@@ -56,8 +50,7 @@ public class ComponentGrouperGH : GH_Component
         }
 
     }
-
     protected override System.Drawing.Bitmap Icon => null;
 
-    public override Guid ComponentGuid => new Guid("3db4bc36-0d98-410e-bbfc-175b0697ca75");
+    public override Guid ComponentGuid => new Guid("439d9920-799c-49db-b9a5-147291e008ad");
 }
