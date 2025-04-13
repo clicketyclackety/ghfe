@@ -32,12 +32,26 @@ namespace rn.viewmodels
       }
     }
 
+    public string Name => Location.Name;
+
+    private bool _canRun = true;
+    public bool CanRun
+    {
+      get => _canRun;
+      set
+      {
+        _canRun = value;
+        RaisePropertyChanged(nameof(CanRun));
+      }
+    }
+
     public override string ToString()
     {
       return Location?.Name ?? base.ToString();
     }
 
     RelayCommand _run;
+
     public ICommand Run => _run ?? (_run = new RelayCommand(OnRunCommand, CanExecute));
 
     private bool CanExecute() => true;
