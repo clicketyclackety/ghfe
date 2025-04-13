@@ -1,6 +1,7 @@
 using Eto.Forms;
 using Eto.Drawing;
 
+using Rhino.UI;
 using Rhino.UI.Controls;
 
 using Grasshopper.Kernel;
@@ -12,7 +13,7 @@ using Grasshopper.Kernel.Types;
 
 using lib.DTO;
 using Rhino.Geometry;
-using Rhino.UI;
+
 using Rhino.Input;
 using System.ComponentModel;
 
@@ -60,6 +61,10 @@ public class Gui : FloatingForm
     this.Resizable = true;
     this.Title = viewModel.Sorted.Name;
     this.MinimumSize = new Size(200, 80);
+
+#if NETCOREAPP
+      this.UseRhinoStyle();
+#endif
   }
 
   public static Gui Load(GH_Document doc)
