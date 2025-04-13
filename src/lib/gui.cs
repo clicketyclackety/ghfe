@@ -34,6 +34,7 @@ public class Gui : FloatingForm
     var automatic = new CheckBox() { Checked = false, Text = "Auto" };
     automatic.CheckedChanged += (s, e) => {
       Model.Automatic = automatic.Checked.GetValueOrDefault(false);
+      run.Enabled = !Model.Automatic;
     };
 
     var bottomLayout = new DynamicLayout()
@@ -78,8 +79,8 @@ public class Gui : FloatingForm
 
   private Control? CreateRow(RowGroup row)
   {
-    DynamicLayout layout = new();
-    layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
+    DynamicLayout layout = new() { Spacing = new Size(8, 4) };
+    layout.BeginVertical(null, new Size(8, 4), true, true);
 
     foreach(var rowItem in row.Children)
     {
@@ -394,7 +395,7 @@ public class Gui : FloatingForm
     try
     {
       var layout = new DynamicLayout();
-      layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
+      layout.BeginVertical(null, new Size(8, 4), true, true);
       
       foreach(var groupChild in group.Children)
       {
