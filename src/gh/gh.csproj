@@ -43,6 +43,7 @@
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" ExcludeAssets="runtime" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="../rhino/rn.csproj" />
     <ProjectReference Include="..\lib\lib.csproj" />
   </ItemGroup>
 
