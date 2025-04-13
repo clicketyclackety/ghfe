@@ -115,15 +115,16 @@ public class Gui : FloatingForm
       GH_NumberSlider slider => CreateSlider(slider),
       GH_Panel panel => CreateLabel(panel),
       
-      Param_Curve curve => PickCurve(GetGeometryButton(curve), curve),
-      Param_Point point => PickPoint(GetGeometryButton(point), point),
+      // Param_Curve curve => PickCurve(GetGeometryButton(curve), curve),
+      // Param_Point point => PickPoint(GetGeometryButton(point), point),
       // Param_Geometry geom => GetGeometryButton<GeometryBase>(geom),
 
       // TODO : Boolean Toggle / CheckBox
+      GH_BooleanToggle toggle => CreateToggle(toggle),
 
       // TODO : Buttons
 
-      _ => null
+      _ => Unsupported(param)
     };
 
     if (control is not null)
@@ -132,6 +133,40 @@ public class Gui : FloatingForm
     }
 
     return control;
+  }
+
+  private Control? CreateToggle(GH_BooleanToggle toggle)
+  {
+    CheckBox checkBox = new CheckBox()
+    {
+      Checked = toggle.Value,
+      Text = toggle.NickName
+    };
+
+    checkBox.CheckedChanged += (s, e) => {
+      toggle.Value = checkBox.Checked.GetValueOrDefault(false);
+    };
+
+    return checkBox;
+  }
+
+  private static Control? Unsupported(IGH_ActiveObject param)
+  {
+    var label = new Label()
+    {
+      TextColor = Colors.Red
+    };
+
+    if (param is null)
+    {
+      label.Text = "Null Element";
+    }
+    else
+    {
+      label.Text = $"{param.NickName} is unsupported";
+    }
+
+    return label;
   }
 
   private Button? PickPoint(Button button, Param_Point param)
@@ -191,8 +226,14 @@ public class Gui : FloatingForm
   {
     var box = new NumericUpDownWithUnitParsing()
     {
-      // Value = integer.Value
+      Value = integer.PersistentData.Select(d => d.Value).FirstOrDefault()
     };
+
+    box.ValueChanged += (s, e) => {
+      integer.ClearData();
+      integer.SetPersistentData(box.Value);
+    };
+
     return WithLabel(integer.NickName, box);
   }
 
@@ -202,23 +243,26 @@ public class Gui : FloatingForm
       // GH_Group group => CreateGroup(group),
       GH_Scribble scribble => CreateTitle(scribble),
 
-      _ => null
+      _ => Unsupported(component)
     };
 
   private static Control? WithLabel(string title, Control? control)
   {
     if (string.IsNullOrEmpty(title)) return control;
+    if (control is null) return new Label { Text = "Err" };
 
     var label = new Label()
     {
       Text = title,
-      Width = 120,
       Wrap = WrapMode.None,
     };
+
+    control.Width = 120;
     
     DynamicLayout layout = new();
     layout.BeginHorizontal();
     layout.Add(label, false, true);
+    layout.AddSpace(false, false);
     layout.Add(control, true, true);
     layout.EndHorizontal();
 
@@ -242,10 +286,24 @@ public class Gui : FloatingForm
   {
     var upDown = new NumericUpDownWithUnitParsing(true);
     upDown.Value = (double)slider.CurrentValue;
-    // TODO : Add Min/Max
+    upDown.MinValue = (double)slider.Slider.Minimum;
+    upDown.MaxValue = (double)slider.Slider.Maximum;
+    // TODO : Verify this works
+    // upDown.Increment = (double)slider.Slider.TickFrequency;
 
     upDown.ValueChanged += (s, e) => {
-      slider.SetSliderValue((decimal)upDown.Value);
+      
+      decimal newValue = (decimal)upDown.Value;
+      if (newValue > slider.Slider.Maximum)
+      {
+        newValue = slider.Slider.Maximum;
+      }
+      else if (newValue < slider.Slider.Minimum)
+      {
+        newValue = slider.Slider.Minimum;
+      }
+
+      slider.SetSliderValue(newValue);
     };
 
     return WithLabel(slider.NickName, upDown);
@@ -259,6 +317,12 @@ public class Gui : FloatingForm
       Text = "",
       ReadOnly = false
     };
+
+    text_input.TextChanged += (s, e) => {
+      text_param.ClearData();
+      text_param.SetPersistentData(text_input.Text);
+    };
+
     return text_input;
   }
 
@@ -269,48 +333,55 @@ public class Gui : FloatingForm
       Value = integer.VolatileData.AllData(true).Where(d => d.IsValid).OfType<GH_Integer>().Select(d => d.Value).FirstOrDefault(),
     };
 
+    box.ValueChanged += (s, e) => {
+      integer.ClearData();
+      integer.SetPersistentData(box.Value);
+    };
+
     return box;
   }
 
-  // private static TValue GetSingleValue<TValue>(IGH_Param param) where TValue : IGH_Goo
-  // {
-  //   var data = param.VolatileData.AllData(true);
-  //   var valid = data.Where(d => d.IsValid);
-  //   var type = data.OfType<TValue>();
-  //   var values = type.Select(d => d.Value)
-  // }
-
   private Control? CreateGroup(RowGroup group)
   {
-    var layout = new DynamicLayout();
-    layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
-    
-    foreach(var groupChild in group.Children)
+    try
     {
-      var etoChild = ConvertRowGroup(groupChild);
-      layout.Add(etoChild, true, false);
+      var layout = new DynamicLayout();
+      layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
+      
+      foreach(var groupChild in group.Children)
+      {
+        var etoChild = ConvertRowGroup(groupChild);
+        layout.Add(etoChild, true, false);
+      }
+
+      layout.EndVertical();
+
+      var etoGroup = new Eto.Forms.Expander()
+      {
+        Expanded = true,
+        Header = group.Name,
+        Content = layout,
+      };
+
+      return etoGroup;
     }
-
-    layout.EndVertical();
-
-    var etoGroup = new Eto.Forms.Expander()
+    catch
     {
-      Expanded = true,
-      Header = group.Name,
-      Content = layout,
-    };
-
-    return etoGroup;
+      return new DynamicLayout();
+    }
   }
 
   #endregion
 
   protected override void OnClosing(CancelEventArgs e)
   {
-    Model?.Doc?.DestroyPreviewCaches();
-    Model?.Doc?.DestroyPreviewMeshes();
-    Model?.Doc?.Dispose();
-    Rhino.RhinoDoc.ActiveDoc?.Views?.Redraw();
+    try
+    {
+      Model?.Doc?.DestroyPreviewCaches();
+      Model?.Doc?.DestroyPreviewMeshes();
+      Model?.Doc?.Dispose();
+      Rhino.RhinoDoc.ActiveDoc?.Views?.Redraw();
+    } catch {}
     base.OnClosing(e);
   }
 

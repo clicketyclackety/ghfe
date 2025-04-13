@@ -67,6 +67,10 @@ namespace rn.viewmodels
 
       Parent.Enabled = false;
       gui.ShowInTaskbar = false;
+
+      bool hasGui = ScriptScanner.TryGetUIGroup(gui.Model.Doc, out _);
+      // <-- Menno
+
       gui.Show(doc);
 
       return true;

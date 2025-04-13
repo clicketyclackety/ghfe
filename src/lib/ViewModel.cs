@@ -29,16 +29,19 @@ public class GViewModel : INotifyPropertyChanged
 
   internal void Run()
   {
-    foreach(var obj in Doc.ActiveObjects())
+    try
     {
-      obj.CollectData();
-      obj.ComputeData();
-    }
+      foreach(var obj in Doc.ActiveObjects())
+      {
+        obj.CollectData();
+        obj.ComputeData();
+      }
 
-    Doc.NewSolution(true, GH_SolutionMode.CommandLine);
-    Doc.ExpirePreview(true);
-    Doc.ForcePreview(true);
-    Rhino.RhinoDoc.ActiveDoc.Views.Redraw();
+      Doc.NewSolution(true, GH_SolutionMode.CommandLine);
+      Doc.ExpirePreview(true);
+      Doc.ForcePreview(true);
+      Rhino.RhinoDoc.ActiveDoc.Views.Redraw();
+    } catch {}
   }
 
   internal RowGroup GetSortedRows()
