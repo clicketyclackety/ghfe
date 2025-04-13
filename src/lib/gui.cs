@@ -35,6 +35,9 @@ public class Gui : FloatingForm
     automatic.CheckedChanged += (s, e) => {
       Model.Automatic = automatic.Checked.GetValueOrDefault(false);
       run.Enabled = !Model.Automatic;
+
+      if (Model.Automatic)
+        Model?.Run();
     };
 
     var bottomLayout = new DynamicLayout()
@@ -60,7 +63,7 @@ public class Gui : FloatingForm
     Content = layout;
     this.Padding = 4;
     this.Resizable = true;
-    this.Title = viewModel.Sorted.Name;
+    this.Title = viewModel.Sorted?.Name?.Replace("_", " ").Replace("UI", "").Replace("-", " ") ?? "GHFE";
     this.MinimumSize = new Size(200, 80);
 
 #if NETCOREAPP
