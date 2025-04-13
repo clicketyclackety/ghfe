@@ -93,14 +93,14 @@ namespace rn.ui
       {
         if (a.PropertyName == nameof(PanelViewModel.LastSelectedDirectory))
         {
-          fileList.ReloadData();
+          fileList?.ReloadData();
         }
       };
 
       this.Shown += (o, a) =>
       {
-        vm.UpdateDirectory(); 
-        fileList.ReloadData();
+        vm?.UpdateDirectory(); 
+        fileList?.ReloadData();
       };
 
       // this binding does not work:
