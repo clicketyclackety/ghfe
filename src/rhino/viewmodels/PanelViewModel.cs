@@ -83,7 +83,7 @@ namespace rn.viewmodels
 
     private void PopulateFromDirectory(TreeGridItem parent, DirectoryInfo di)
     {
-
+      // issue: this enumerates other files too somehow
       var files = di.EnumerateFiles("*.gh");
       foreach (var file in files)
       {
