@@ -26,6 +26,7 @@ public class GViewModel : INotifyPropertyChanged
   {
     try
     {
+      
       foreach(var obj in Doc.ActiveObjects())
       {
         obj.CollectData();

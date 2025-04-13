@@ -24,9 +24,12 @@ namespace rn.ui
     {
       if (control is not Label text) return;
       if (args.Item is not TreeGridItem item) return;
-      if (item.Values?.FirstOrDefault() is not FileViewModel fvm) return;
+      if (item.Values?.FirstOrDefault() is FileViewModel fvm) 
+        text.Text = fvm.Name;
 
-      text.Text = fvm.Name;
+      // subdirectory does not have FileViewModel, give it the item string
+      if (item.Values.Length > 0)
+        text.Text = item.Values[0].ToString();
     }
   }
 
@@ -35,6 +38,10 @@ namespace rn.ui
   {
     protected override Control OnCreateCell(CellEventArgs args)
     {
+      // a subdirectory does not contain a FileViewModel. In that case return an empty label
+      if (args.Item is not TreeGridItem item) return new Label();
+      if (item.Values?.FirstOrDefault() is not FileViewModel) return new Label();
+
       var cb = new CheckBox();
       cb.BindDataContext((CheckBox a) => a.Checked, (FileViewModel vm) => vm.CanRun);
       return cb;
@@ -45,6 +52,8 @@ namespace rn.ui
       if (control is not CheckBox cb) return;
       if (args.Item is not TreeGridItem item) return;
       if (item.Values?.FirstOrDefault() is not FileViewModel fvm) return;
+
+      // set the value
       cb.Checked = fvm.CanRun;
     }
   }
