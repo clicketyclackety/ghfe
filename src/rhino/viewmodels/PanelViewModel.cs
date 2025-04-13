@@ -1,4 +1,5 @@
-﻿using Rhino.UI;
+﻿using Eto.Forms;
+using Rhino.UI;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -23,6 +24,8 @@ namespace rn.viewmodels
         return s_instance;
       }
     }
+
+    public TreeGridItemCollection FilesTree { get; } = new TreeGridItemCollection();
 
     public ObservableCollection<FileViewModel> Files { get; } = new ObservableCollection<FileViewModel>();
 
@@ -65,6 +68,14 @@ namespace rn.viewmodels
         {
           FileViewModel fvm = new FileViewModel(this, ghFile);
           Files.Add(fvm);
+        }
+
+        FilesTree.Clear();
+        foreach(FileInfo ghFile in ghFiles)
+        {
+          FileViewModel fvm = new FileViewModel(this, ghFile);
+          TreeGridItem fileItem = new TreeGridItem(fvm);
+          FilesTree.Add(fileItem);
         }
 
         RaisePropertyChanged(nameof(LastSelectedDirectory));
