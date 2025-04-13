@@ -21,14 +21,28 @@ namespace lib;
 public class Gui : FloatingForm
 {
 
-  public GViewModel? Model => DataContext as GViewModel;
+  public GViewModel Model => DataContext as GViewModel;
 
   private Gui(GViewModel viewModel)
   {
     DataContext = viewModel;
 
-    var run = new Button() { Text = "Run!" };
+    var run = new Button() { Text = "Run" };
     run.Click += (s,e) => Model?.Run();
+
+    var automatic = new CheckBox() { Checked = false, Text = "Auto" };
+    automatic.CheckedChanged += (s, e) => {
+      Model.Automatic = true;
+    };
+
+    var bottomLayout = new DynamicLayout()
+    {
+      Spacing = new Size(8, 0),
+    };
+    bottomLayout.BeginHorizontal();
+    bottomLayout.Add(run, true, true);
+    bottomLayout.Add(automatic, false, false);
+    bottomLayout.EndHorizontal();
 
     // TODO : Cancel Button
 
@@ -38,7 +52,7 @@ public class Gui : FloatingForm
     layout.BeginVertical(new Padding(2), new Size(8, 4), true, true);
     layout.Add(child, true, false);
     layout.AddSpace(true, true);
-    layout.Add(run, true, false);
+    layout.Add(bottomLayout, true, false);
     layout.EndVertical();
 
     Content = layout;
@@ -144,7 +158,13 @@ public class Gui : FloatingForm
     };
 
     checkBox.CheckedChanged += (s, e) => {
+      toggle.ClearData();
       toggle.Value = checkBox.Checked.GetValueOrDefault(false);
+      toggle.CollectData();
+      toggle.ComputeData();
+
+      if (Model.Automatic)
+        Model?.Run();
     };
 
     return checkBox;
@@ -179,6 +199,9 @@ public class Gui : FloatingForm
           // TODO : 
           // param.CollectData();
         }
+
+        if (Model.Automatic)
+          Model?.Run();
       });
     };
 
@@ -195,6 +218,9 @@ public class Gui : FloatingForm
           // TODO : 
           // param.CollectData();
         }
+
+        if (Model.Automatic)
+          Model?.Run();
       });
     };
 
@@ -222,7 +248,7 @@ public class Gui : FloatingForm
     };
   }
 
-  private static Control? GetNumberHandlerFromInteger(Param_Integer integer)
+  private Control? GetNumberHandlerFromInteger(Param_Integer integer)
   {
     var box = new NumericUpDownWithUnitParsing()
     {
@@ -232,6 +258,9 @@ public class Gui : FloatingForm
     box.ValueChanged += (s, e) => {
       integer.ClearData();
       integer.SetPersistentData(box.Value);
+
+      if (Model.Automatic)
+        Model?.Run();
     };
 
     return WithLabel(integer.NickName, box);
@@ -259,10 +288,12 @@ public class Gui : FloatingForm
 
     control.Width = 120;
     
-    DynamicLayout layout = new();
+    DynamicLayout layout = new()
+    {
+      Spacing = new Size(12, 0),
+    };
     layout.BeginHorizontal();
     layout.Add(label, false, true);
-    layout.AddSpace(false, false);
     layout.Add(control, true, true);
     layout.EndHorizontal();
 
@@ -275,22 +306,25 @@ public class Gui : FloatingForm
     {
       Text = scribble.Text,
       Font = new Font(SystemFont.Default),
-      TextColor = Colors.Black,
       VerticalAlignment = VerticalAlignment.Center,
       TextAlignment = TextAlignment.Left
     };
     return title;
   }
 
-  private static Control? CreateSlider(GH_NumberSlider slider)
+  private Control? CreateSlider(GH_NumberSlider slider)
   {
-    var upDown = new NumericUpDownWithUnitParsing(true);
-    upDown.Value = (double)slider.CurrentValue;
-    upDown.MinValue = (double)slider.Slider.Minimum;
-    upDown.MaxValue = (double)slider.Slider.Maximum;
-    // TODO : Verify this works
-    // upDown.Increment = (double)slider.Slider.TickFrequency;
+    var upDown = new NumericUpDownWithUnitParsing(true)
+    {
+      Width = 60,
+      Value = (double)slider.CurrentValue,
+      MinValue = (double)slider.Slider.Minimum,
+      MaxValue = (double)slider.Slider.Maximum,
 
+      // TODO : Verify this works
+      // upDown.Increment = (double)slider.Slider.TickFrequency;
+    };
+    
     upDown.ValueChanged += (s, e) => {
       
       decimal newValue = (decimal)upDown.Value;
@@ -304,12 +338,15 @@ public class Gui : FloatingForm
       }
 
       slider.SetSliderValue(newValue);
+
+      if (Model.Automatic)
+        Model?.Run();
     };
 
     return WithLabel(slider.NickName, upDown);
   }
 
-  private static Control? CreateTextInput(Param_String text_param)
+  private Control? CreateTextInput(Param_String text_param)
   {
     var text_input = new Eto.Forms.TextBox
     {
@@ -321,12 +358,15 @@ public class Gui : FloatingForm
     text_input.TextChanged += (s, e) => {
       text_param.ClearData();
       text_param.SetPersistentData(text_input.Text);
+
+      if (Model.Automatic)
+        Model?.Run();
     };
 
     return text_input;
   }
 
-  private static Control? CreateIntegerInput(Param_Integer integer)
+  private Control? CreateIntegerInput(Param_Integer integer)
   {
     var box = new NumericStepper()
     {
@@ -336,6 +376,9 @@ public class Gui : FloatingForm
     box.ValueChanged += (s, e) => {
       integer.ClearData();
       integer.SetPersistentData(box.Value);
+
+      if (Model.Automatic)
+        Model?.Run();
     };
 
     return box;

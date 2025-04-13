@@ -1,11 +1,4 @@
-using Eto.Forms;
-
-using Rhino.UI.Controls;
-
 using Grasshopper.Kernel;
-using Grasshopper.Kernel.Components;
-using Grasshopper.Kernel.Parameters;
-using Grasshopper.Kernel.Special;
 
 using System.ComponentModel;
 using lib.DTO;
@@ -16,6 +9,8 @@ public class GViewModel : INotifyPropertyChanged
 {
 
   public GH_Document Doc { get; }
+
+  public bool Automatic { get; set; } = false;
 
   public RowGroup Sorted { get; set; }
 
