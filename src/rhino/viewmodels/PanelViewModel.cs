@@ -27,13 +27,16 @@ namespace rn.viewmodels
 
     public void UpdateDirectory()
     {
-      // enumerate the *.gh files in the directory
-      Files.Clear();
-      FilesTree.Clear();
-      TreeGridItem root = new TreeGridItem(_lastSelectedDirectory.Name);
-      PopulateFromDirectory(root, _lastSelectedDirectory);
-      root.Expanded = true;
-      FilesTree.Add(root);
+      if (LastSelectedDirectory?.Exists ?? false)
+      {
+        // enumerate the *.gh files in the directory
+        Files.Clear();
+        FilesTree.Clear();
+        TreeGridItem root = new TreeGridItem(_lastSelectedDirectory.Name);
+        PopulateFromDirectory(root, _lastSelectedDirectory);
+        root.Expanded = true;
+        FilesTree.Add(root);
+      }
 
     }
 
