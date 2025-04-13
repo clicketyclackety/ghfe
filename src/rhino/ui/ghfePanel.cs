@@ -89,6 +89,19 @@ namespace rn.ui
       fileList.Columns.Add(column2);
 
       fileList.DataStore = vm.FilesTree;
+      vm.PropertyChanged += (o, a) =>
+      {
+        if (a.PropertyName == nameof(PanelViewModel.LastSelectedDirectory))
+        {
+          fileList.ReloadData();
+        }
+      };
+
+      this.Shown += (o, a) =>
+      {
+        vm.UpdateDirectory(); 
+        fileList.ReloadData();
+      };
 
       // this binding does not work:
       //fileList.SelectedItemBinding.BindDataContext(nameof(PanelViewModel.SelectedFile));

@@ -25,6 +25,18 @@ namespace rn.viewmodels
       }
     }
 
+    public void UpdateDirectory()
+    {
+      // enumerate the *.gh files in the directory
+      Files.Clear();
+      FilesTree.Clear();
+      TreeGridItem root = new TreeGridItem(_lastSelectedDirectory.Name);
+      PopulateFromDirectory(root, _lastSelectedDirectory);
+      root.Expanded = true;
+      FilesTree.Add(root);
+
+    }
+
     public TreeGridItemCollection FilesTree { get; } = new TreeGridItemCollection();
 
     public ObservableCollection<FileViewModel> Files { get; } = new ObservableCollection<FileViewModel>();
@@ -60,30 +72,7 @@ namespace rn.viewmodels
         if (!value.Exists) return;
 
         _lastSelectedDirectory = value;
-
-        // enumerate the *.gh files in the directory
-        Files.Clear();
-        /*
-        IEnumerable<FileInfo> ghFiles = LastSelectedDirectory.EnumerateFiles("*.gh", SearchOption.TopDirectoryOnly);
-        foreach (FileInfo ghFile in ghFiles)
-        {
-          FileViewModel fvm = new FileViewModel(this, ghFile);
-          Files.Add(fvm);
-        }
-
-        FilesTree.Clear();
-        foreach(FileInfo ghFile in ghFiles)
-        {
-          FileViewModel fvm = new FileViewModel(this, ghFile);
-          TreeGridItem fileItem = new TreeGridItem(fvm);
-          FilesTree.Add(fileItem);
-        }//*/
-
-        TreeGridItem root = new TreeGridItem(_lastSelectedDirectory.Name);
-        PopulateFromDirectory(root, _lastSelectedDirectory);
-        root.Expanded = true;
-        FilesTree.Add(root);
-        
+        UpdateDirectory();
 
         RaisePropertyChanged(nameof(LastSelectedDirectory));
       }
