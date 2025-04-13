@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+using Rhino.Display;
+using Rhino.Geometry;
+
 namespace lib.DTO
 {
     public static class RowElementsExtensions
@@ -27,5 +30,7 @@ namespace lib.DTO
             }
             return result;
         }
+
+
     }
 }
