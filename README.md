@@ -79,3 +79,11 @@ Snazzy links to help you get started, debug and learn!
 
 ### Licensing
 This project is [MIT](https://www.tldrlegal.com/license/mit-license)! Use it for anything you like, free of charge!
+
+<details>
+
+<summary>Play the tune while you clone this repo! :notes: </summary>
+  
+https://github.com/user-attachments/assets/c58d41b5-7574-4f81-b6a7-14f7a1c68112
+
+</details>
