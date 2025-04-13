@@ -47,9 +47,9 @@ namespace lib.DTO
                         Point3d cellLowerRight = new Point3d(origin.X + (i + 1) * cellWidth, currentY - leafHeight, 0);
 
                         Rectangle3d cellRect = new Rectangle3d(Plane.WorldXY, cellOrigin, cellLowerRight);
-                        string leafName = leaf.Name;
+                        string componentName = leaf.Components[i].Name;
                         outlines.Add(cellRect.ToPolyline());
-                        labels.Add(leafName);
+                        labels.Add(componentName);
                     }
 
                     currentY -= leafHeight;
