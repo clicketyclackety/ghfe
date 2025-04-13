@@ -32,7 +32,7 @@ public class Gui : FloatingForm
 
     var automatic = new CheckBox() { Checked = false, Text = "Auto" };
     automatic.CheckedChanged += (s, e) => {
-      Model.Automatic = true;
+      Model.Automatic = automatic.Checked.GetValueOrDefault(false);
     };
 
     var bottomLayout = new DynamicLayout()
