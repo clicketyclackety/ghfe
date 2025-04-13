@@ -62,6 +62,10 @@ This is an early version, expect a few quirks, weird behaviors, and missing poli
 - Krzysztof Nazar
 - Menno Deij - van Rijswijk
 
+## How to create your UI
+
+https://github.com/user-attachments/assets/0ebb2426-8b56-4ebd-b11a-0f502bd9eda7
+
 ## Contribution Guidelines
 We love contributions! Contributions keep open source alive! Please firstly take a look at any open issues, they're a great place to get started helping with users real issues.
 For any issues you want to help solve, open a Pull Request and link the issue. The original issue creator will be very excited to collaborate :grin:.
