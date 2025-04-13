@@ -1,0 +1,22 @@
+---
+name: GHFE
+version: 0.1.0
+authors:
+- Alfredo Chavez
+- Atilla Nagy
+- Callum Sykes
+- Kohei Hayashi
+- Krzysztof Nazar
+- Matt Harwood
+- Menno Deij - van Rijswijk
+description: >
+  The easiest, cleanest, and least soul-crushing way to turn your Grasshopper scripts into real, usable interfaces
+url: https://github.com/clicketyclackety/ghfe
+keywords:
+- Grasshopper
+- ghfe
+- ui
+- gui
+- simple
+- eto
+icon: icon.png
